@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> 96d18126214acde42d6c417b608da42f1181919e
 // // fetsh the header in html pages
 
 // const header = document.querySelector("body");
@@ -9,6 +12,7 @@
 //   .then((headerContent) => {
 //     header.insertAdjacentHTML("afterbegin", headerContent);
 //   });
+<<<<<<< HEAD
 
 const grid = document.querySelector("#grid");
 const list = document.querySelector("#list");
@@ -51,3 +55,5 @@ export function listGridView() {
   });
 }
 >>>>>>> Stashed changes
+=======
+>>>>>>> 96d18126214acde42d6c417b608da42f1181919e
