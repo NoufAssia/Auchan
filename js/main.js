@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> 96d18126214acde42d6c417b608da42f1181919e
 // import data from api.js (dummyJSON)
 
 // import { fetchProducts } from "./api.js";
@@ -12,7 +7,7 @@
 // import data from api.js (data.json)
 
 import { fetchProducts } from "./api.js";
-<<<<<<< HEAD
+
 // console.log("main.js is working");
 const products = await fetchProducts();
 // console.log("products:", products);
@@ -53,8 +48,4 @@ function searchForProducts() {
   showProducts(searchProducts);
 }
 searchInput.addEventListener("input", searchForProducts);
->>>>>>> Stashed changes
-=======
-const products = await fetchProducts();
-console.log(products);
->>>>>>> 96d18126214acde42d6c417b608da42f1181919e
+
