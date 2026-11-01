@@ -22,7 +22,7 @@
 // fetch data from data.json
 
 export async function fetchProducts() {
-  const dataResponse = await fetch("../data/data.json");
+  const dataResponse = await fetch("./data/data.json");
   const products = await dataResponse.json();
   return products;
 }
