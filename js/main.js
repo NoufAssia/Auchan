@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> 96d18126214acde42d6c417b608da42f1181919e
 // import data from api.js (dummyJSON)
 
 // import { fetchProducts } from "./api.js";
@@ -12,49 +7,112 @@
 // import data from api.js (data.json)
 
 import { fetchProducts } from "./api.js";
-<<<<<<< HEAD
+
+import {
+  showProducts,
+  filteredProdcuts,
+  totalPages,
+  pagination,
+  // pageNumbers,
+} from "./products.js";
+
 // console.log("main.js is working");
 const products = await fetchProducts();
 // console.log("products:", products);
-// console.log(products);
+
+
+let searchValue = "";
+let categorySelected = "all";
+let currentPage = 1;
+const productInPage = 8;
+
 const htmlCards = document.querySelector("#products-div");
-function showProducts(wantedProducts) {
-  const productsCards = wantedProducts.map((product) => {
-    return `<article class=" product-article  border rounded-xl shadow-sm border-slate-200 p-4 bg-white ">
-  <img src="${product.image}" alt="produit iamge" loading="lazy" class="w-full h-48 object-contain">
-  <div class=" product-infos ">
-  <h2 class="font-bold text-lg">${product.title}</h2>
-  <p class="text-sm text-slate-500">${product.description}</p>
-  </div>
-  <div class="product-prbtn flex justify-between items-center mt-4 gap-3">
-  <p class="font-bold">${product.price} DH</p>
-  <button type="button" class="rounded-lg bg-red-600 text-white px-4 py-2">+</button>
-  </div>
-  </article>`;
-  });
-  htmlCards.innerHTML = productsCards.join("");
-}
-showProducts(products);
-// .map() return an array of html strings  while innerHTML needs an html string so .join("") combines the array elements into one string
-
-// // list and grid view
-// import { listGridView } from "./ui.js";
-// listGridView();
-
-//    search
-
+const previous = document.querySelector("#previous");
+const next = document.querySelector("#next");
+// const numberPage = document.querySelector("#number");
 const searchInput = document.querySelector("#searchInput");
+const categoryBtn = document.querySelector("#categoryBtn");
+const categoryFilter = document.querySelector("#categoryFilter");
+const categoryList = document.querySelector("#categoryList");
+const allCategories = document.querySelector("#allCategories");
+const pageNumber = document.querySelector("#pageNumber");
 
-function searchForProducts() {
-  const searchValue = searchInput.value.toLowerCase();
-  const searchProducts = products.filter((product) => {
-    return product.title.toLowerCase().includes(searchValue);
-  });
-  showProducts(searchProducts);
+function combine() {
+  const filtered = filteredProdcuts(products, searchValue, categorySelected);
+  const totalPage = totalPages(filtered.length, productInPage);
+  if (currentPage > totalPage) {
+    currentPage = totalPage;
+  }
+  const productsPage = pagination(filtered, currentPage, productInPage);
+
+  showProducts(productsPage, htmlCards);
+  // pageNumbers(pageNumber, totalPage, currentPage);
+
+  pageNumber.textContent = currentPage;
+  previous.disabled = currentPage === 1;
+  next.disabled = currentPage === totalPage;
 }
-searchInput.addEventListener("input", searchForProducts);
->>>>>>> Stashed changes
-=======
-const products = await fetchProducts();
-console.log(products);
->>>>>>> 96d18126214acde42d6c417b608da42f1181919e
+
+// search
+
+searchInput.addEventListener("input", () => {
+  searchValue = searchInput.value.toLowerCase();
+  currentPage = 1;
+  combine();
+});
+
+// filter by category
+
+const categories = [...new Set(products.map((product) => product.category))];
+
+categoryList.innerHTML = categories
+  .map((category) => {
+    return `<button type="button" class="category-option block w-full text-left p-2 hover:bg-slate-100" data-category="${category}">${category}</button>`;
+  })
+  .join("");
+
+categoryBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+  categoryFilter.classList.remove("hidden");
+});
+
+categoryFilter.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+document.addEventListener("click", (event) => {
+  event.stopPropagation();
+});
+
+document.addEventListener("click", () => {
+  categoryFilter.classList.add("hidden");
+});
+
+categoryList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("category-option")) {
+    categorySelected = event.target.dataset.category;
+    currentPage = 1;
+    combine();
+    categoryFilter.classList.add("hidden");
+  }
+});
+
+allCategories.addEventListener("click", () => {
+  categorySelected = "all";
+  currentPage = 1;
+  combine();
+  categoryFilter.classList.add("hidden");
+});
+
+previous.addEventListener("click", () => {
+  currentPage--;
+  combine();
+});
+
+next.addEventListener("click", () => {
+  currentPage++;
+  combine();
+});
+combine();
+
+
